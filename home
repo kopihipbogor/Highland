@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Highland Park Resort Bogor | Official Site</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* ==========================================================================
+           1. BASE STYLES
+           ========================================================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: #fff; 
+            color: #333; 
+            line-height: 1.6;
+            overflow-x: hidden; 
+        }
+
+        /* ==========================================================================
+           2. HEADER & NAVIGATION
+           ========================================================================== */
+        .main-header {
+            position: absolute;
+            top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 25px 0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .main-header.sticky {
+            position: fixed; 
+            background: rgba(255, 255, 255, 0.98); 
+            padding: 15px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 95%; margin: 0 auto;
+        }
+
+        .header-left, .header-right { display: flex; align-items: center; flex: 1; }
+        .header-right { justify-content: flex-end; }
+
+        .hamburger-menu { cursor: pointer; margin-right: 40px; }
+        .hamburger-menu span {
+            display: block; width: 28px; height: 1px; background-color: #fff; margin-bottom: 8px;
+            transition: 0.3s;
+        }
+
+        .main-header.sticky .hamburger-menu span { background-color: #333; }
+        .main-header.sticky .nav-links a { color: #333; }
+
+/* 1. Logo saat awal (di atas Hero) - Warna Putih */
+.logo img { 
+    height: 75px; 
+    transition: 0.4s ease; 
+    /* brightness(0) membuatnya hitam, invert(1) mengubahnya menjadi putih */
+    filter: brightness(0) invert(1); 
+}
+
+/* 2. Logo saat di-scroll (Sticky) - Kembali ke Warna Asli */
+.main-header.sticky .logo img { 
+    height: 75px; 
+    /* Mengembalikan logo ke warna aslinya (hijau/emas) */
+    filter: none; 
+}
+
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a {
+            color: #fff; text-decoration: none; font-size: 11px;
+            text-transform: uppercase; letter-spacing: 2px; font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { opacity: 0.6; }
+
+        .book-now-btn {
+            background-color: #4b8a8e; color: #fff; text-decoration: none;
+            padding: 12px 26px; font-size: 11px; font-weight: 600;
+            letter-spacing: 2px; margin-left: 30px; transition: 0.3s;
+        }
+        .book-now-btn:hover { background-color: #3d6f72; transform: translateY(-2px); }
+
+        /* Fullscreen Menu Overlay */
+        .menu-overlay {
+            position: fixed; top: -110%; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.98); z-index: 2000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .menu-overlay.active { top: 0; }
+        .close-menu { position: absolute; top: 30px; left: 40px; font-size: 40px; cursor: pointer; color: #333; }
+        .overlay-nav { display: flex; flex-direction: column; gap: 20px; text-align: center; }
+        .overlay-nav a {
+            font-family: 'Playfair Display', serif; font-size: 32px; text-decoration: none;
+            color: #333; text-transform: uppercase; letter-spacing: 4px; transition: 0.3s;
+        }
+        .overlay-nav a:hover { color: #4b8a8e; font-style: italic; }
+
+        /* ==========================================================================
+           3. HERO SLIDER
+           ========================================================================== */
+        .hero-swiper { width: 100%; height: 100vh; }
+        .hero-slide {
+            width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            position: relative;
+        }
+        .hero-slide::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.25); }
+        .hero-content { position: relative; z-index: 2; padding: 0 20px; }
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif; color: #fff;
+            font-size: clamp(40px, 7vw, 85px); letter-spacing: 12px; line-height: 1.1;
+            text-transform: uppercase;
+        }
+        .hero-content p { font-family: 'Playfair Display', serif; color: #fff; font-style: italic; font-size: clamp(16px, 2vw, 24px); margin-top: 20px; }
+        .swiper-pagination-bullet { background: #fff !important; opacity: 0.5; }
+        .swiper-pagination-bullet-active { opacity: 1; }
+
+        /* ==========================================================================
+           4. HAVEN SECTION
+           ========================================================================== */
+        .haven-section { padding: 120px 0; background-color: #f8f7f5; overflow: hidden; }
+        .container { max-width: 1250px; margin: 0 auto; padding: 0 25px; }
+        .haven-grid { display: grid; grid-template-columns: 0.8fr 1.2fr 1fr; gap: 0; align-items: center; }
+        .haven-text-card {
+            background: #ebeae5; padding: 70px 50px; z-index: 10;
+            margin-right: -100px; position: relative;
+            box-shadow: 30px 30px 80px rgba(0,0,0,0.04);
+        }
+        .haven-title { font-family: 'Playfair Display', serif; font-size: 32px; letter-spacing: 3px; margin-bottom: 25px; }
+        .haven-title span { color: #4b8a8e; font-style: italic; }
+        .haven-image-main img { width: 100%; height: 750px; object-fit: cover; display: block; }
+        .haven-image-stack { display: flex; flex-direction: column; gap: 30px; padding-left: 30px; }
+        .haven-image-stack img { width: 100%; height: 350px; object-fit: cover; }
+
+        /* ==========================================================================
+           5. VILLAS SECTION
+           ========================================================================== */
+        .villas-section { padding: 100px 0; background: #fff; }
+        .section-divider { display: flex; align-items: center; justify-content: center; gap: 30px; margin-bottom: 60px; }
+        .divider-line { flex: 1; height: 1px; background: #e0e0e0; max-width: 250px; }
+        .section-title-italic { font-family: 'Playfair Display', serif; font-style: italic; font-size: 28px; color: #444; }
+        .villa-item { position: relative; height: 550px; margin-bottom: 60px; }
+        .villa-item img { width: 100%; height: 100%; object-fit: cover; }
+        .villa-info-card {
+            position: absolute; bottom: -40px; right: 0; background: #f8f7f5;
+            padding: 40px; width: 85%; z-index: 5;
+            box-shadow: 15px 15px 40px rgba(0,0,0,0.06);
+        }
+        .villa-info-card h3 { font-family: 'Playfair Display', serif; color: #4b8a8e; margin-bottom: 15px; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+        .btn-book-outline { 
+            border: 1px solid #4b8a8e; color: #4b8a8e; padding: 12px 25px; 
+            text-decoration: none; font-size: 11px; font-weight: 700; transition: 0.3s;
+        }
+        .btn-book-outline:hover { background: #4b8a8e; color: #fff; }
+
+/* =========================================
+   6. GALLERY STRIP (DRONE STYLE)
+   ========================================= */
+.gallery-strip { 
+    width: 100%; 
+    height: 450px; 
+    position: relative;
+    overflow: hidden;
+}
+
+.gallery-bg { 
+    width: 100%; 
+    height: 100%; 
+    /* Gunakan gambar drone yang Anda inginkan */
+    background-image: url('https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/BARRACK-APACHE-1-scaled.webp'); 
+    background-size: cover; 
+    background-position: center;
+    display: flex; 
+    align-items: flex-end; /* Tombol di bawah */
+    justify-content: center; 
+    padding-bottom: 40px;
+}
+
+.view-gallery-btn {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333; 
+    text-decoration: none; 
+    font-size: 10px; 
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px; 
+    padding: 12px 30px; 
+    transition: 0.3s;
+    border: none;
+}
+
+.view-gallery-btn:hover { background: #fff; transform: translateY(-3px); }
+
+/* Responsive Fix */
+@media (max-width: 992px) {
+    .haven-grid { grid-template-columns: 1fr; }
+    .haven-text-card { margin-right: 0; padding: 40px; }
+    .gallery-strip { height: 300px; }
+}
+      
+      /* =========================================
+   NEW: CAMP SECTION STYLES
+   ========================================= */
+.camp-section {
+    padding: 100px 0;
+    background-color: #fff; /* Warna putih bersih */
+}
+
+.camp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.camp-card {
+    background: #fdfdfd;
+    border: 1px solid #eee;
+    transition: 0.4s ease;
+}
+
+.camp-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+.camp-img {
+    position: relative;
+    height: 350px;
+    overflow: hidden;
+}
+
+.camp-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.6s;
+}
+
+.camp-card:hover .camp-img img {
+    transform: scale(1.1);
+}
+
+.camp-tag {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #4b8a8e;
+    color: #fff;
+    padding: 5px 15px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.camp-details {
+    padding: 40px;
+}
+
+.camp-details h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.camp-details p {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 30px;
+    line-height: 1.8;
+}
+
+.camp-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.camp-footer .price {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4b8a8e;
+}
+
+.btn-explore {
+    font-size: 11px;
+    font-weight: 700;
+    color: #333;
+    text-decoration: none;
+    letter-spacing: 2px;
+    border-bottom: 2px solid #4b8a8e;
+    padding-bottom: 5px;
+    transition: 0.3s;
+}
+
+.btn-explore:hover {
+    color: #4b8a8e;
+}
+
+/* Responsive Camp */
+@media (max-width: 768px) {
+    .camp-grid {
+        grid-template-columns: 1fr;
+    }
+    .camp-img {
+        height: 250px;
+    }
+}
+
+
+        /* =========================================
+           7. FOOTER SECTION
+           ========================================= */
+        .main-footer {
+            position: relative;
+            background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80') no-repeat center center/cover;
+            padding: 100px 0 30px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .main-footer::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* Overlay sedikit lebih gelap agar teks terbaca */
+            z-index: 1;
+        }
+
+        .footer-container {
+            position: relative; z-index: 2;
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+        }
+
+        .footer-logo { text-align: center; margin-bottom: 60px; }
+        .main-footer img { 
+    filter: brightness(0) invert(1) !important; 
+}
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr 1fr 0.8fr;
+            gap: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding-top: 40px; margin-bottom: 60px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 14px; text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 25px; font-weight: 700;
+        }
+
+        .footer-col p, .footer-col a {
+            font-size: 11px; color: rgba(255, 255, 255, 0.8);
+            text-decoration: none; display: block; margin-bottom: 12px;
+            line-height: 1.8; letter-spacing: 1px; transition: 0.3s;
+        }
+
+        .footer-col a:hover { color: #fff; transform: translateX(3px); }
+
+        .footer-action-row {
+            display: flex; justify-content: space-between;
+            align-items: flex-end; margin-bottom: 50px;
+        }
+
+        .newsletter-box h4 { font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; margin-bottom: 15px; }
+
+        .input-group { display: flex; gap: 10px; }
+        .input-group input {
+            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 10px 15px; color: #fff; width: 250px; font-size: 12px;
+        }
+
+        .btn-submit {
+            background: transparent; border: 1px solid #fff; color: #fff;
+            padding: 10px 20px; cursor: pointer; font-size: 11px; font-weight: 600;
+        }
+
+        .btn-book-footer {
+            background: #4b8a8e; color: #fff; padding: 15px 40px;
+            text-decoration: none; font-weight: 700; letter-spacing: 2px; font-size: 12px;
+        }
+
+        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.3); padding-top: 40px; }
+        .partner-logos { display: flex; justify-content: space-around; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 20px; }
+        .partner-logos img { height: 35px; filter: brightness(0) invert(1); }
+
+        .bottom-bar { display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: rgba(255, 255, 255, 0.5); }
+        .bottom-links a { color: rgba(255, 255, 255, 0.5); text-decoration: none; margin: 0 10px; }
+        .social-links a { color: #fff; margin-left: 15px; font-size: 16px; }
+
+        .back-to-top { position: absolute; right: 20px; top: 40px; cursor: pointer; text-align: center; }
+
+        /* ANIMATION CLASSES */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.2s; }
+        .delay-2 { transition-delay: 0.4s; }
+
+        @media (max-width: 1150px) {
+            .nav-links { display: none; }
+            .haven-grid { grid-template-columns: 1fr; }
+            .haven-text-card { margin-right: 0; padding: 40px; }
+            .haven-image-main img { height: 500px; }
+            .haven-image-stack { flex-direction: row; padding-left: 0; padding-top: 20px; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-action-row { flex-direction: column; align-items: flex-start; gap: 30px; }
+        }
+	
+	/* Mengatur ukuran logo agar sejajar dengan teks partner */
+.partner-logos-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.partner-logos-strip img {
+    height: 80px; /* Sesuaikan tinggi ini agar serasi dengan teks */
+    width: auto;
+    filter: brightness(0) invert(1); /* Tetap putih */
+    opacity: 0.8;
+}
+
+.partner-text {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+}
+	
+
+    </style>
+
+</head>
+<body>
+
+    <header class="main-header" id="header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="hamburger-menu"><span></span><span></span><span></span></div>
+                <nav class="nav-links">
+                    <a href="#">Glamping</a>
+                    <a href="#">Offers</a>
+                    <a href="#">Activities</a>
+                    <a href="#">Facility</a>
+                </nav>
+            </div>
+            <div class="header-center">
+                <a href="#" class="logo">
+                    <img src="https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/2022/10/LOGO-BARU.png" alt="The Highland Park Bogor Logo">
+                </a>
+            </div>
+            <div class="header-right">
+                <nav class="nav-links">
+                    <a href="#">Restaurants</a>
+                    <a href="#">Experiences</a>
+                    <a href="#">Contact</a>
+                </nav>
+                <a href="https://api.whatsapp.com/send?phone=628558132999" class="book-now-btn">BOOK NOW</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="close-menu" id="closeMenu">&times;</div>
+        <nav class="overlay-nav">
+            <a href="#">Glamping</a>
+            <a href="#">Offers</a>
+            <a href="#">Activities</a>
+            <a href="#">Restaurants</a>
+            <a href="#">Experiences</a>
+            <a href="#">Wellness</a>
+            <a href="#">Contact</a>
+        </nav>
+    </div>
+
+    <section class="swiper hero-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide hero-slide" style="background-image: url('https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/9e08d718c1c6ae89e52295870f5c9c60.webp');">
+                <div class="hero-content">
+                    <h1>LUXURY GOES<br>BAREFOOT</h1>
+                    <p>Experience high-end personal service in a relaxing environment</p>
+                </div>
+            </div>
+            <div class="swiper-slide hero-slide" style="background-image: url('https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/BARRACK-APACHE-1-scaled.webp');">
+                <div class="hero-content">
+                    <h1>A PRIVATE<br>HAVEN</h1>
+                    <p>Relax in the most exclusive GLAMPING in BOGOR</p>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </section>
+
+    <section class="haven-section">
+        <div class="container haven-grid">
+            <div class="haven-text-card reveal">
+                <h2 class="haven-title">A GLAMPING <span>PARADISE</span> IN BOGOR</h2>
+                <p>The Highland Park Resort Bogor menghadirkan konsep resort bernuansa gabungan kultur Barat dan Timur, di mana Anda dapat merasakan sensasi menginap di tenda bangsa Mongolia dan Apache dengan latar belakang Gunung Salak.</p>
+                <a href="#" style="display:inline-block; margin-top:20px; color:#4b8a8e; font-size:11px; font-weight:700; text-decoration:none; letter-spacing:2px;">GETTING HERE &#10230;</a>
+            </div>
+            <div class="haven-image-main reveal delay-1">
+                <img src="https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/9e08d718c1c6ae89e52295870f5c9c60.webp" alt="Mountain">
+            </div>
+            <div class="haven-image-stack reveal delay-2">
+                <img src="https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/Apache-scaled.webp" alt="Apache">
+                <img src="https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/Mongolian-Standar-Camp-scaled.webp" alt="Mongolian">
+            </div>
+        </div>
+    </section>
+
+    <section class="villas-section">
+        <div class="container">
+            <div class="section-divider reveal">
+                <span class="divider-line"></span>
+                <h2 class="section-title-italic">Accomodation</h2>
+                <span class="divider-line"></span>
+            </div>
+
+            <div class="swiper mySwiper reveal delay-1">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="villa-item">
+                            <img src="https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/Alpine-House-scaled.webp" alt="Alpine House">
+                            <div class="villa-info-card">
+                                <h3>VILLA</h3>
+                                <p>Island bliss elevates to its very limit in the Master Villa - The Highland Park Resort Bogor.</p>
+                                <div class="card-footer">
+                                    <a href="#" style="color:#4b8a8e; font-size:12px; font-weight:700; text-decoration:none;">SEE MORE &#10230;</a>
+                                    <a href="https://api.whatsapp.com/send?phone=628558132999" class="btn-book-outline">BOOK NOW</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="villa-item">
+                            <img src="https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/The-Cave-scaled.webp" alt="The Cave">
+                            <div class="villa-info-card">
+                                <h3>CAMP</h3>
+                                <p>Combining modern Asian architecture with the ultimate Caribbean feel.</p>
+                                <div class="card-footer">
+                                    <a href="#" style="color:#4b8a8e; font-size:12px; font-weight:700; text-decoration:none;">SEE MORE &#10230;</a>
+                                    <a href="https://api.whatsapp.com/send?phone=628558132999" class="btn-book-outline">BOOK NOW</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="villa-item">
+                            <img src="https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/BARRACK-APACHE-1-scaled.webp">
+                            <div class="villa-info-card">
+                                <h3>BARRACK</h3>
+                                <p>Combining modern Asian architecture with the ultimate Caribbean feel.</p>
+                                <div class="card-footer">
+                                    <a href="#" style="color:#4b8a8e; font-size:12px; font-weight:700; text-decoration:none;">SEE MORE &#10230;</a>
+                                    <a href="https://api.whatsapp.com/send?phone=628558132999" class="btn-book-outline">BOOK NOW</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+
+<section class="gallery-strip">
+    <div class="gallery-bg">
+        <a href="https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/Fasad-Villa-Alpine-House.webp" class="view-gallery-btn">
+            Explore Gallery <i class="fa-solid fa-chevron-right" style="margin-left: 10px;"></i>
+        </a>
+    </div>
+</section>
+  <section class="camp-section">
+    <div class="container">
+        <div class="section-divider reveal">
+            <span class="divider-line"></span>
+            <h2 class="section-title-italic">The Camp Experience</h2>
+            <span class="divider-line"></span>
+        </div>
+
+        <div class="camp-grid">
+            <div class="camp-card reveal">
+                <div class="camp-img">
+                    <img src="https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/Apache-scaled.webp" alt="Apache Camp">
+                    <div class="camp-tag">Most Popular</div>
+                </div>
+                <div class="camp-details">
+                    <h3>APACHE CAMP</h3>
+                    <p>Authentic glamping experience inspired by Native American spirit, surrounded by lush greenery.</p>
+                    <div class="camp-footer">
+                        <span class="price">From IDR 1.500.000</span>
+                        <a href="#" class="btn-explore">EXPLORE</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="camp-card reveal delay-1">
+                <div class="camp-img">
+                    <img src="https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/Mongolian-Standar-Camp-scaled.webp" alt="Mongolian Camp">
+                </div>
+                <div class="camp-details">
+                    <h3>MONGOLIAN CAMP</h3>
+                    <p>Luxurious white tents with modern amenities, offering a unique stay under the stars of Mt. Salak.</p>
+                    <div class="camp-footer">
+                        <span class="price">From IDR 1.800.000</span>
+                        <a href="#" class="btn-explore">EXPLORE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <footer class="main-footer">
+    <div class="footer-container">
+        <div style="text-align: center; position: relative; margin-bottom: 80px;">
+            <img src="https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/2022/10/LOGO-BARU.png" alt="The Highland Park Resort Bogor Logo" style="width: 200px;">
+            <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="top: 0;">
+                <i class="fa-solid fa-chevron-up"></i>
+                <span style="display: block; font-size: 9px; font-style: italic;">Top</span>
+            </div>
+        </div>
+
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>reservation@ thehighlandparkresortbogor.com</p>
+                <p>+62 251-8485-777</p>
+                <p>+62 855-8132-999</p>
+            </div>
+            <div class="footer-col">
+                <h4>Address</h4>
+                <p>Jl. Raya Curug Nangka, Sinarwangi, Sukajadi,<br>Kec. Tamansari,<br>Kabupaten Bogor,<br>Jawa Barat 16610</p>
+                <a href="https://maps.app.goo.gl/T5juyvf5Sf6Ez34PA"><i class="fa-solid fa-location-dot"></i> Google map</a>
+            </div>
+            <div class="footer-col">
+                <h4>The Resort</h4>
+                <a href="#">VILLA</a>
+                <a href="#">BARRACK</a>
+                <a href="#">GLAMPING</a>
+            </div>
+            <div class="footer-col">
+                <h4 style="visibility: hidden;">Links</h4>
+                <a href="#">OFFERS</a>
+                <a href="#">OUTBOUND</a>
+                <a href="#">GEOBOUND</a>
+            </div>
+            <div class="footer-col">
+                <h4 style="visibility: hidden;">Links</h4>
+                <a href="#">GALLERY</a>
+                <a href="#">OUR STORY</a>
+                <a href="#">NEWS</a>
+                <a href="#">CAREERS</a>
+            </div>
+        </div>
+
+        <div class="footer-action-row" style="border-top: none;">
+            <div class="newsletter-box">
+                <h4>NEWSLETTER</h4>
+                <p style="text-transform: none; margin-bottom: 20px;">Subscribe for our latest updates and special offers.</p>
+                <div class="input-group">
+                    <input type="email" placeholder="Your Email" style="background: #fff; color: #333;">
+                    <button class="btn-submit" style="background: transparent; border: 1px solid #fff;">SUBMIT <i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div style="max-width: 450px; text-align: right;">
+                <a href="https://api.whatsapp.com/send?phone=628558132999" class="btn-book-footer">BOOK NOW</a>
+                <p style="font-size: 10px; margin-top: 20px; text-transform: none; opacity: 0.9;">
+                    You can also request a quote. If you prefer to talk with someone you can call us at <br> +62 251-8485-777 or send us an email to reservation@ thehighlandparkresortbogor.com
+                </p>
+            </div>
+        </div>
+
+        <div class="partner-logos-strip">
+            <span class="partner-text">Sundanese Kultural Park</span>
+            <span class="partner-text">KopiHiP</span>
+            <img src="https://thehighlandparkresortbogor.com/Indonesia/wp-content/uploads/2022/10/LOGO-BARU.png" alt="Forbes">
+            <span class="partner-text">Geobound</span>
+            <span class="partner-text">Highland Equestrian Club</span>
+           <span class="partner-text">Hi-Mart</span>
+        </div>
+
+        <div class="bottom-bar">
+            <div>© 2026 The Highland Park Resort Bogor. All Rights Reserved.</div>
+            <div class="bottom-links">
+                <a href="#">Agent Info</a>
+                <a href="#">FAQ</a>
+                <a href="#">House Rules</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="social-links">
+                <a href="https://www.tiktok.com/@highlandparkresortbogor"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://www.facebook.com/thehighlandparkresortbogor/?locale=id_ID"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/thehighlandparkresortbogor/"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@TheHighlandParkResortBogorTV"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://id.pinterest.com/TheHighlandParkResortBogor/"><i class="fa-brands fa-pinterest"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // Sticky Header
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            header.classList.toggle('sticky', window.scrollY > 80);
+        });
+
+        // Menu Overlay Logic
+        const menuBtn = document.querySelector('.hamburger-menu');
+        const closeBtn = document.getElementById('closeMenu');
+        const overlay = document.getElementById('menuOverlay');
+
+        menuBtn.addEventListener('click', () => overlay.classList.add('active'));
+        closeBtn.addEventListener('click', () => overlay.classList.remove('active'));
+
+        // Hero Swiper
+        new Swiper(".hero-swiper", {
+            loop: true,
+            effect: "fade",
+            speed: 1000,
+            autoplay: { delay: 5000 },
+            pagination: { el: ".swiper-pagination", clickable: true }
+        });
+
+        // Villa Swiper
+        new Swiper(".mySwiper", {
+            slidesPerView: 1.1,
+            spaceBetween: 30,
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+            breakpoints: {
+                768: { slidesPerView: 1.2 },
+                1024: { slidesPerView: 1.5 }
+            }
+        });
+
+        // Scroll Reveal
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
